@@ -456,7 +456,7 @@ robyn_allocator <- function(robyn_object = NULL,
     ## bounded optimisation
 
     nlsMod <- nloptr::nloptr(
-      x0 = x0,
+      x0 = initSpendUnit,
       eval_f = eval_f,
       eval_g_eq = if (constr_mode == "eq") eval_g_eq else NULL,
       eval_g_ineq = if (constr_mode == "ineq") eval_g_ineq else NULL,
