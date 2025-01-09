@@ -453,11 +453,9 @@ robyn_allocator <- function(robyn_object = NULL,
   x_hist_carryover <- unlist(lapply(inflation_total, mean))
 
   if (scenario == "max_response") {
-    ## bounded optimisation
-
-    nlsMod <- nloptr::nloptr(
-      x0 = initSpendUnit,
-      eval_f = eval_f,
+    initSpendUnit_adj = mapply(max, initSpendUnit, lb)
+    initSpendUnit_adj = mapply(min, initSpendUnit_adj, ub)
+    nlsMod <- nloptr::nloptr(x0 = initSpendUnit_adj, eval_f = eval_f,
       eval_g_eq = if (constr_mode == "eq") eval_g_eq else NULL,
       eval_g_ineq = if (constr_mode == "ineq") eval_g_ineq else NULL,
       lb = lb, ub = ub,
